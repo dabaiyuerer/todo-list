@@ -4,7 +4,7 @@
       <input type="checkbox" />
       <span>{{ todo.title }}</span>
     </label>
-    <button class="btn btn-danger" style="display: none">删除</button>
+    <button class="btn btn-danger" @click="deleteTodo">删除</button>
   </li>
 </template>
 
@@ -12,6 +12,11 @@
 export default {
   name: 'TodoListItem',
   props: ['todo'],
+  methods: {
+    deleteTodo() {
+      this.$bus.$emit('deleteTodo', this.todo.id)
+    },
+  },
 }
 </script>
 
@@ -40,6 +45,10 @@ li button {
   float: right;
   display: none;
   margin-top: 3px;
+}
+
+li:hover button {
+  display: inline-block;
 }
 
 li:before {

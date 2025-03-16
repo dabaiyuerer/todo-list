@@ -33,12 +33,20 @@ export default {
       }
       this.todos.unshift(todo)
     },
+    del(id) {
+      this.todos.splice(
+        this.todos.findIndex((todo) => todo.id === id),
+        1
+      )
+    },
   },
   mounted() {
     this.$refs.todoListHeader.$on('addTodo', this.addTodo)
+    this.$bus.$on('deleteTodo', this.del)
   },
   beforeDestroy() {
     this.$refs.todoListHeader.$off('addTodo')
+    this.$bus.$off('deleteTodo')
   },
 }
 </script>

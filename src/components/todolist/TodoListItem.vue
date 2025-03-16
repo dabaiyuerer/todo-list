@@ -1,7 +1,7 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" @change="isDone" ref="todoIput" />
+      <input type="checkbox" v-model="isDone" />
       <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger" @click="deleteTodo">删除</button>
@@ -16,8 +16,15 @@ export default {
     deleteTodo() {
       this.$bus.$emit('deleteTodo', this.todo.id)
     },
-    isDone() {
-      this.$bus.$emit('isDone', this.todo.id, this.$refs.todoIput.checked)
+  },
+  computed: {
+    isDone: {
+      get() {
+        return this.todo.done
+      },
+      set(value) {
+        this.$bus.$emit('isDone', this.todo.id, value)
+      },
     },
   },
 }

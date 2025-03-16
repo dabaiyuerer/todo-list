@@ -45,17 +45,21 @@ export default {
     delDone() {
       this.todos = this.todos.filter((todo) => todo.done === false)
     },
+    checkAll(value) {
+      this.todos.forEach((todo) => (todo.done = value))
+    },
   },
   mounted() {
     this.$refs.todoListHeader.$on('addTodo', this.addTodo)
     this.$refs.todoListFooter.$on('delDone', this.delDone)
+    this.$refs.todoListFooter.$on('checkAll', this.checkAll)
     this.$bus.$on('deleteTodo', this.del)
     this.$bus.$on('isDone', this.isDone)
   },
   beforeDestroy() {
     this.$refs.todoListHeader.$off('addTodo')
-    this.$refs.todoListFooter.$off('delDone')
-    this.$bus.$off('deleteTodo', 'isDone')
+    this.$refs.todoListFooter.$off(['delDone', 'checkAll'])
+    this.$bus.$off(['deleteTodo', 'isDone'])
   },
 }
 </script>

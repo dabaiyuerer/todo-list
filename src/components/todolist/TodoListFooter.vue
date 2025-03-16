@@ -1,7 +1,7 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="checkAll" />
     </label>
     <span>
       <span>已完成{{ hasDone }}</span> / 全部{{ total }}
@@ -25,6 +25,14 @@ export default {
     },
     total() {
       return this.todos.length
+    },
+    checkAll: {
+      get() {
+        return this.total > 0 && this.hasDone === this.total
+      },
+      set(value) {
+        this.$emit('checkAll', value)
+      },
     },
   },
 }

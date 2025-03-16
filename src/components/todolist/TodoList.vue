@@ -25,7 +25,7 @@ export default {
     }
   },
   methods: {
-    addtodo(title) {
+    addTodo(title) {
       const todo = {
         id: nanoid(),
         title,
@@ -35,10 +35,10 @@ export default {
     },
   },
   mounted() {
-    this.$refs.todoListHeader.$on('addtodo', this.addtodo)
+    this.$refs.todoListHeader.$on('addTodo', this.addTodo)
   },
   beforeDestroy() {
-    this.$refs.todoListHeader.$off('addtodo')
+    this.$refs.todoListHeader.$off('addTodo')
   },
 }
 </script>

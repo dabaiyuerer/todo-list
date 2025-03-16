@@ -2,8 +2,8 @@
   <div id="todo-list">
     <div class="todo-container">
       <div class="todo-wrap">
-        <TodoListHeader />
-        <TodoListBody />
+        <TodoListHeader ref="todoListHeader" />
+        <TodoListBody :todos="todos" />
         <TodoListFooter />
       </div>
     </div>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { nanoid } from 'nanoid'
 import TodoListHeader from './TodoListHeader.vue'
 import TodoListBody from './TodoListBody.vue'
 import TodoListFooter from './TodoListFooter.vue'
@@ -18,6 +19,27 @@ import TodoListFooter from './TodoListFooter.vue'
 export default {
   name: 'TodoList',
   components: { TodoListHeader, TodoListBody, TodoListFooter },
+  data() {
+    return {
+      todos: [],
+    }
+  },
+  methods: {
+    addtodo(title) {
+      const todo = {
+        id: nanoid(),
+        title,
+        done: false,
+      }
+      this.todos.unshift(todo)
+    },
+  },
+  mounted() {
+    this.$refs.todoListHeader.$on('addtodo', this.addtodo)
+  },
+  beforeDestroy() {
+    this.$refs.todoListHeader.$off('addtodo')
+  },
 }
 </script>
 

@@ -2,7 +2,7 @@
   <li>
     <label>
       <input type="checkbox" />
-      <span>yyyy</span>
+      <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger" style="display: none">删除</button>
   </li>
@@ -11,6 +11,7 @@
 <script>
 export default {
   name: 'TodoListItem',
+  props: ['todo'],
 }
 </script>
 
@@ -28,7 +29,7 @@ li label {
   cursor: pointer;
 }
 
-li label li input {
+li label input {
   vertical-align: middle;
   margin-right: 6px;
   position: relative;

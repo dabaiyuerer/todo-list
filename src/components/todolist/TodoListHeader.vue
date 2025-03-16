@@ -1,12 +1,27 @@
 <template>
   <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
+    <input
+      type="text"
+      placeholder="请输入你的任务名称，按回车键确认"
+      @keyup.enter="addtodo"
+      ref="headerInput"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: 'TodoListHeader',
+  methods: {
+    addtodo() {
+      if (!this.$refs.headerInput.value.trim()) {
+        confirm('待办事件内容不能为空！')
+      } else {
+        this.$emit('addtodo', this.$refs.headerInput.value.trim())
+      }
+      this.$refs.headerInput.value = ''
+    },
+  },
 }
 </script>
 

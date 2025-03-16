@@ -4,7 +4,7 @@
       <div class="todo-wrap">
         <TodoListHeader ref="todoListHeader" />
         <TodoListBody :todos="todos" />
-        <TodoListFooter />
+        <TodoListFooter ref="todoListFooter" />
       </div>
     </div>
   </div>
@@ -39,14 +39,23 @@ export default {
         1
       )
     },
+    isDone(id, value) {
+      this.todos[this.todos.findIndex((todo) => todo.id === id)].done = value
+    },
+    delDone() {
+      this.todos = this.todos.filter((todo) => todo.done === false)
+    },
   },
   mounted() {
     this.$refs.todoListHeader.$on('addTodo', this.addTodo)
+    this.$refs.todoListFooter.$on('delDone', this.delDone)
     this.$bus.$on('deleteTodo', this.del)
+    this.$bus.$on('isDone', this.isDone)
   },
   beforeDestroy() {
     this.$refs.todoListHeader.$off('addTodo')
-    this.$bus.$off('deleteTodo')
+    this.$refs.todoListFooter.$off('delDone')
+    this.$bus.$off('deleteTodo', 'isDone')
   },
 }
 </script>

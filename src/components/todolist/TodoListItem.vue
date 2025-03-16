@@ -1,7 +1,7 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" @change="isDone" ref="todoIput" />
       <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger" @click="deleteTodo">删除</button>
@@ -15,6 +15,9 @@ export default {
   methods: {
     deleteTodo() {
       this.$bus.$emit('deleteTodo', this.todo.id)
+    },
+    isDone() {
+      this.$bus.$emit('isDone', this.todo.id, this.$refs.todoIput.checked)
     },
   },
 }

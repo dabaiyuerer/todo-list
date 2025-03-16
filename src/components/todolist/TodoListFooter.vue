@@ -3,7 +3,9 @@
     <label>
       <input type="checkbox" />
     </label>
-    <span> <span>已完成0</span> / 全部2 </span>
+    <span>
+      <span>已完成{{ hasDone }}</span> / 全部{{ total }}
+    </span>
     <button class="btn btn-danger" @click="delDone">清除已完成任务</button>
   </div>
 </template>
@@ -11,9 +13,18 @@
 <script>
 export default {
   name: 'TodoListFooter',
+  props: ['todos'],
   methods: {
     delDone() {
       this.$emit('delDone')
+    },
+  },
+  computed: {
+    hasDone() {
+      return this.todos.reduce((prev, curr) => prev + (curr.done ? 1 : 0), 0)
+    },
+    total() {
+      return this.todos.length
     },
   },
 }

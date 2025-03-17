@@ -21,8 +21,16 @@ export default {
   components: { TodoListHeader, TodoListBody, TodoListFooter },
   data() {
     return {
-      todos: [],
+      todos: JSON.parse(localStorage.getItem('todos')) || [],
     }
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler(value) {
+        localStorage.setItem('todos', JSON.stringify(value))
+      },
+    },
   },
   methods: {
     addTodo(title) {

@@ -12,7 +12,9 @@
       />
     </label>
     <button class="btn btn-danger" @click="deleteTodo">删除</button>
-    <button v-show="isEdit" class="btn btn-edit" @click="editTodo">编辑</button>
+    <button v-show="canEdit" class="btn btn-edit" @click="editTodo">
+      编辑
+    </button>
   </li>
 </template>
 
@@ -23,14 +25,14 @@ export default {
   data() {
     return {
       isShow: true,
-      isEdit: !this.todo.done,
+      canEdit: !this.todo.done,
     }
   },
   watch: {
     todo: {
       deep: true,
       handler() {
-        this.isEdit = !this.todo.done
+        this.canEdit = !this.todo.done
       },
     },
   },
@@ -40,14 +42,14 @@ export default {
     },
     editTodo() {
       this.isShow = !this.isShow
-      this.isEdit = false
+      this.canEdit = false
       this.$nextTick(function () {
         this.$refs.inputTitle.focus()
       })
     },
     saveEdit() {
       this.isShow = !this.isShow
-      this.isEdit = true
+      this.canEdit = true
     },
   },
   computed: {

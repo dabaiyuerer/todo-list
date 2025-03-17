@@ -48,6 +48,9 @@ export default {
     checkAll(value) {
       this.todos.forEach((todo) => (todo.done = value))
     },
+    editTodoTitle(id, title) {
+      this.todos[this.todos.findIndex((todo) => todo.id === id)].title = title
+    },
   },
   mounted() {
     this.$refs.todoListHeader.$on('addTodo', this.addTodo)
@@ -55,11 +58,12 @@ export default {
     this.$refs.todoListFooter.$on('checkAll', this.checkAll)
     this.$bus.$on('deleteTodo', this.del)
     this.$bus.$on('isDone', this.isDone)
+    this.$bus.$on('editTodoTitle', this.editTodoTitle)
   },
   beforeDestroy() {
     this.$refs.todoListHeader.$off('addTodo')
     this.$refs.todoListFooter.$off(['delDone', 'checkAll'])
-    this.$bus.$off(['deleteTodo', 'isDone'])
+    this.$bus.$off(['deleteTodo', 'isDone', 'editTodoTitle'])
   },
 }
 </script>

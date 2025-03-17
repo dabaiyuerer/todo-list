@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-footer">
+  <div class="todo-footer" v-show="isShow">
     <label>
       <input type="checkbox" v-model="checkAll" />
     </label>
@@ -33,6 +33,9 @@ export default {
       set(value) {
         this.$emit('checkAll', value)
       },
+    },
+    isShow() {
+      return this.total > 0
     },
   },
 }

@@ -38,9 +38,20 @@ body {
   border: 1px solid #bd362f;
 }
 
+.btn-edit {
+  margin-right: 6px;
+  color: #fff;
+  background-color: #69d469;
+  border: 1px solid #499849;
+}
+
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
+}
+.btn-edit:hover {
+  color: #fff;
+  background-color: #499849;
 }
 
 .btn:focus {

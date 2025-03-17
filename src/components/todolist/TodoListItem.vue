@@ -2,9 +2,19 @@
   <li>
     <label>
       <input type="checkbox" v-model="isDone" />
-      <span>{{ todo.title }}</span>
+      <span v-show="isShow">{{ todo.title }}</span>
+      <input
+        v-show="!isShow"
+        type="text"
+        v-model="editTodoTitle"
+        ref="inputTitle"
+        @blur="saveEdit"
+      />
     </label>
     <button class="btn btn-danger" @click="deleteTodo">删除</button>
+    <button v-show="!isEdit" class="btn btn-edit" @click="editTodo">
+      编辑
+    </button>
   </li>
 </template>
 
@@ -12,9 +22,26 @@
 export default {
   name: 'TodoListItem',
   props: ['todo'],
+  data() {
+    return {
+      isShow: true,
+      isEdit: false,
+    }
+  },
   methods: {
     deleteTodo() {
       this.$bus.$emit('deleteTodo', this.todo.id)
+    },
+    editTodo() {
+      this.isShow = !this.isShow
+      this.isEdit = !this.isEdit
+      this.$nextTick(function () {
+        this.$refs.inputTitle.focus()
+      })
+    },
+    saveEdit() {
+      this.isShow = !this.isShow
+      this.isEdit = !this.isEdit
     },
   },
   computed: {
@@ -24,6 +51,15 @@ export default {
       },
       set(value) {
         this.$bus.$emit('isDone', this.todo.id, value)
+        this.isEdit = !this.isEdit
+      },
+    },
+    editTodoTitle: {
+      get() {
+        return this.todo.title
+      },
+      set(value) {
+        this.$bus.$emit('editTodoTitle', this.todo.id, value)
       },
     },
   },
